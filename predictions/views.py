@@ -25,8 +25,6 @@ class SolarPredictionView(APIView):
     
 
 
-
-
         model = SolarModel()
 
         results = []
