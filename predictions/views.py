@@ -16,41 +16,43 @@ class SolarPredictionView(APIView):
         radiation = float(request.GET.get("radiation", 800))
         panel_capacity = float(request.GET.get("panel_capacity", 20))
 
-        panels_min = int(request.GET.get("panels_min", 10))
-        panels_max = int(request.GET.get("panels_max", 12))
+        panels = int(request.GET.get("panels", 10))
+        panels_capacity = int(request.GET.get("panels_capacity", 300))
 
-        sun_min = float(request.GET.get("sun_min", 4))
-        sun_max = float(request.GET.get("sun_max", 6))
-        sun_step = float(request.GET.get("sun_step", 0.5))
-    
+        sun_hours = float(request.GET.get("sun_hours", 6))
+        
 
 
         model = SolarModel()
 
-        results = []
+        results = [[
+             temperature,
+             cloud_cover,
+             radiation,
+             panels,
+             panel_capacity,
+             sun_hours
+        ]]
 
-        panels = panels_min
+        energy = model.predict(results)[0]
 
-        while panels <= panels_max:
 
-            sun_hours = sun_min
+             
+        
 
-            while sun_hours <= sun_max:
+        
+     
 
-                X = [[temperature, cloud_cover, radiation, panels, panel_capacity, sun_hours]]
-
-                energy = model.predict(X)[0]
-
-                results.append({
-                    "panels": panels,
-                    "sun_hours": sun_hours,
-                    "predicted_energy_kwh": energy
-                })
-
-                sun_hours += sun_step
-
-            panels += 1
-        return Response(results)
+               
+        return Response({
+            "temperature": temperature,
+            "cloud_cover": cloud_cover,
+            "radiation": radiation,
+            "panels":panels,
+            "panel_capacity": panel_capacity,
+            "sun_hours": sun_hours,
+            "predicted_energy_in_kWh": energy
+        })
 
         
 
