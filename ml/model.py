@@ -19,6 +19,7 @@ class SolarWindModel:
         humidity = X[:, 6]
         wind_speed = X[:,7]
         rotor_area = X[:,8]
+        hub_height = X[:, 9]
 
 
         performance_ratio =0.8
@@ -31,6 +32,8 @@ class SolarWindModel:
 
         power_coefficient = 0.4 # typical value for modern wind turbines.
         air_density = 1.225 # kg/m^3
+
+        wind_speed = wind_speed * (hub_height /10) ** 0.14 # Adjusting wind speed for hub height using the power law.
         
         Power = 0.5 * air_density * rotor_area * power_coefficient * wind_speed**3
 

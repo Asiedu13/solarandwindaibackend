@@ -24,6 +24,7 @@ class SolarWindPredictionView(APIView):
         sun_hours = float(request.GET.get("sun_hours", 6))
 
         rotor_area = int(request.GET.get("rotor_area", 10))
+        hub_height = int(request.GET.get("hub_height", 50))
         
 
 
@@ -39,6 +40,7 @@ class SolarWindPredictionView(APIView):
              humidity,
              wind_speed,
              rotor_area,
+             hub_height,
 
         ]]
 
@@ -72,6 +74,7 @@ class SolarWindPredictionView(APIView):
             "humidity": humidity,
             "wind_speed": wind_speed,
             "rotor_area": rotor_area,
+            "hub_height": hub_height,
             "daily_wind_predicted_power_in_kWh": daily_power,
             "weekly_wind_predicted_power_in_kWh": daily_power * 7,
             "monthly_wind_predicted_power_in_kWh": daily_power * 30,
